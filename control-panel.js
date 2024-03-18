@@ -4,6 +4,7 @@ const app = Vue.createApp({
 		const score2 = Vue.ref(0);
 		const playersTurn = Vue.ref(1);
 		const serveCount = Vue.ref(2);  //number of serve before it switches to the other player
+		const reverseColumns = Vue.ref(JSON.parse(localStorage.getItem('reverseColumns')));
 		let ws;
 
 		const connectWebSocket = () => {
@@ -47,6 +48,11 @@ const app = Vue.createApp({
 			ws.send(JSON.stringify({ type: 'switchServe' }));
 		};
 
+		const swapSides = () => {
+			reverseColumns.value = !reverseColumns.value;
+			localStorage.setItem('reverseColumns', JSON.stringify(reverseColumns.value));
+		};
+
 		const changeServeCount = () => {
 			ws.send(JSON.stringify({ type: 'setServeCount', count: serveCount.value }));
 		};
@@ -62,9 +68,11 @@ const app = Vue.createApp({
 			score2,
 			playersTurn,
 			serveCount,
+			reverseColumns,
 			incrementScore,
 			decrementScore,
 			switchServe,
+			swapSides,
 			changeServeCount,
 			reset,
 		};

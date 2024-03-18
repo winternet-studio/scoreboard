@@ -13,11 +13,11 @@ body, html {
 	padding: 0;
 	height: 100%;
 }
-#app {
+#players-container {
 	display: flex;
 	height: 100%;
 }
-#app.reverse-columns {
+#players-container.reverse-columns {
 	flex-direction: row-reverse;
 }
 #left, #right {
@@ -54,13 +54,15 @@ body, html {
 </head>
 <body>
 	<div id="app">
-		<div id="left" class="player-square">
-			<div v-if="playersTurn === 1" class="serve-indicator" style="left: 20px"></div>
-			{{ score1 }}
-		</div>
-		<div id="right" class="player-square">
-			<div v-if="playersTurn === 2" class="serve-indicator" style="right: 20px"></div>
-			{{ score2 }}
+		<div id="players-container" :class="{ 'reverse-columns': reverseColumns }" @click="swapSides">
+			<div id="left" class="player-square">
+				<div v-if="playersTurn === 1" class="serve-indicator" :style="{ ...(reverseColumns ? { right: '20px' } : { left: '20px' }) }"></div>
+				{{ score1 }}
+			</div>
+			<div id="right" class="player-square">
+				<div v-if="playersTurn === 2" class="serve-indicator" :style="{ ...(reverseColumns ? { left: '20px' } : { right: '20px' }) }"></div>
+				{{ score2 }}
+			</div>
 		</div>
 	</div>
 </body>

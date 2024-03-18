@@ -17,20 +17,15 @@ body {
 	height: 100vh;
 	font-family: Tahoma;
 }
-#app {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-#app.reverse-columns {
-	flex-direction: row-reverse;
-}
 #players-container {
 	display: flex;
 	justify-content: space-around;
 	width: 100%;
 	max-width: 800px; /* Adjust max-width as needed */
 	margin-bottom: 20px;
+}
+#players-container.reverse-columns {
+	flex-direction: row-reverse;
 }
 #left-player,
 #right-player {
@@ -62,7 +57,7 @@ button.dec {
 </head>
 <body>
 	<div id="app">
-		<div id="players-container">
+		<div id="players-container" :class="{ 'reverse-columns': reverseColumns }">
 			<div id="left-player">
 				<button @click="incrementScore(1)" class="inc">{{ score1 }}</button>
 				<div :class="{ 'player-name': true, 'my-turn': playersTurn === 1 }">Player 1</div>
@@ -78,6 +73,8 @@ button.dec {
 			<button @click="switchServe">Switch Serve</button>
 			&nbsp;
 			<button @click="reset">Reset</button>
+			&nbsp;
+			<button @click="swapSides">Swap Sides</button>
 		</div>
 		<div style="margin-top: 10px">
 			<input type="range" min="1" max="10" v-model="serveCount" @change="changeServeCount" />

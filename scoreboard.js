@@ -5,6 +5,7 @@ const app = Vue.createApp({
 		const score1 = ref(0);
 		const score2 = ref(0);
 		const playersTurn = ref(1);
+		const reverseColumns = Vue.ref(JSON.parse(localStorage.getItem('reverseColumns')));
 
 		const connectWebSocket = () => {
 			const ws = new WebSocket('ws://'+ scoreboardConfig.host +':'+ scoreboardConfig.port);
@@ -30,11 +31,21 @@ const app = Vue.createApp({
 			};
 		};
 
+		const swapSides = () => {
+			reverseColumns.value = !reverseColumns.value;
+			localStorage.setItem('reverseColumns', JSON.stringify(reverseColumns.value));
+		};
+
 		onMounted(() => {
 			connectWebSocket();
 		});
 
-		return { score1, score2, playersTurn };
+		return { score1,
+			score2,
+			playersTurn,
+			reverseColumns,
+			swapSides,
+		};
 	},
 });
 
