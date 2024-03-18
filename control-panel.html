@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control Panel</title>
+<script src="https://unpkg.com/vue@3"></script>
+<script src="config.js"></script>
+<script src="control-panel.js" defer></script>
+<style>
+body {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	font-family: Tahoma;
+}
+#app {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#app.reverse-columns {
+	flex-direction: row-reverse;
+}
+#players-container {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	max-width: 800px; /* Adjust max-width as needed */
+	margin-bottom: 20px;
+}
+#left-player,
+#right-player {
+	flex-basis: 50%;
+}
+
+.player-name {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: center;
+}
+.my-turn {
+	font-weight: bold;
+}
+
+button.inc,
+button.dec {
+	width: 100%;
+}
+button.inc {
+	height: 100px;
+	font-size: 50px;
+	font-weight: bold;
+}
+button.dec {
+	height: 30px;
+}
+</style>
+</head>
+<body>
+	<div id="app">
+		<div id="players-container">
+			<div id="left-player">
+				<button @click="incrementScore(1)" class="inc">{{ score1 }}</button>
+				<div :class="{ 'player-name': true, 'my-turn': playersTurn === 1 }">Player 1</div>
+				<button @click="decrementScore(1)" class="dec">-</button>
+			</div>
+			<div id="right-player">
+				<button @click="incrementScore(2)" class="inc" :class="{ 'my-turn': playersTurn === 2 }">{{ score2 }}</button>
+				<div :class="{ 'player-name': true, 'my-turn': playersTurn === 2 }">Player 2</div>
+				<button @click="decrementScore(2)" class="dec">-</button>
+			</div>
+		</div>
+		<div>
+			<button @click="switchServe">Switch Serve</button>
+			&nbsp;
+			<button @click="reset">Reset</button>
+		</div>
+		<div style="margin-top: 10px">
+			<input type="range" min="1" max="10" v-model="serveCount" @change="changeServeCount" />
+			<label>{{ serveCount }} serves each</label>
+		</div>
+	</div>
+</body>
+</html>
