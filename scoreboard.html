@@ -13,6 +13,9 @@ body, html {
 	padding: 0;
 	height: 100%;
 }
+.dark-theme {
+	background-color: #151f2c;
+}
 #players-container {
 	display: flex;
 	height: 100%;
@@ -42,17 +45,24 @@ body, html {
 	justify-content: center;
 	align-items: center;
 }
+.dark-theme .player-square {
+	background-color: #1b293a;
+	color: white;
+}
 .serve-indicator {
 	position: absolute;
 	bottom: 20px;
-	width: 15vh;
-	height: 15vh;
-	border-radius: 130px;
+	width: 12vh;
+	height: 12vh;
+	border-radius: 50%;
 	background-color: #498bd5;
+}
+.dark-theme .serve-indicator {
+	background-color: #517db2;
 }
 </style>
 </head>
-<body>
+<body class="dark-theme">
 	<div id="app">
 		<div id="players-container" :class="{ 'reverse-columns': reverseColumns }" @click="swapSides">
 			<div id="left" class="player-square">
