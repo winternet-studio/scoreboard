@@ -49,6 +49,15 @@ body, html {
 	background-color: #1b293a;
 	color: white;
 }
+.points-container {
+	text-align: center;
+}
+.special-point {
+	color: #00d7d7;
+}
+.set-match {
+	font-size: min(10vw, 10vh);
+}
 .serve-indicator {
 	position: absolute;
 	bottom: 20px;
@@ -67,11 +76,23 @@ body, html {
 		<div id="players-container" :class="{ 'reverse-columns': reverseColumns }" @click="swapSides">
 			<div id="left" class="player-square">
 				<div v-if="playersTurn === 1" class="serve-indicator" :style="{ ...(reverseColumns ? { right: '20px' } : { left: '20px' }) }"></div>
-				{{ score1 }}
+				<div class="points-container">
+					<div :class="{'special-point': isSpecialPoint(1)}">{{ score1 }}</div>
+					<div v-if="currSport == 'tennis'"><!-- for now only use for tennis -->
+						<div class="set-match">Set: {{ setPoints1 }}</div>
+						<div class="set-match">Match: {{ matchPoints1 }}</div>
+					</div>
+				</div>
 			</div>
 			<div id="right" class="player-square">
 				<div v-if="playersTurn === 2" class="serve-indicator" :style="{ ...(reverseColumns ? { left: '20px' } : { right: '20px' }) }"></div>
-				{{ score2 }}
+				<div class="points-container">
+					<div :class="{'special-point': isSpecialPoint(2)}">{{ score2 }}</div>
+					<div v-if="currSport == 'tennis'"><!-- for now only use for tennis -->
+						<div class="set-match">Set: {{ setPoints2 }}</div>
+						<div class="set-match">Match: {{ matchPoints2 }}</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

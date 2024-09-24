@@ -17,6 +17,11 @@ body {
 	height: 100vh;
 	font-family: Tahoma;
 }
+.sport-selector {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+}
 #players-container {
 	display: flex;
 	justify-content: space-around;
@@ -30,6 +35,12 @@ body {
 #left-player,
 #right-player {
 	flex-basis: 50%;
+}
+
+.pointsinput {
+	width: 30px;
+	text-align: center;
+	border: 0;
 }
 
 .player-name {
@@ -62,11 +73,17 @@ button.dec {
 				<button @click="incrementScore(1)" class="inc">{{ score1 }}</button>
 				<div :class="{ 'player-name': true, 'my-turn': playersTurn === 1 }">Player 1</div>
 				<button @click="decrementScore(1)" class="dec">-</button>
+				<div style="height: 20px"></div>
+				<div style="text-align: right;">Sets: <input type="number" v-model="setPoints1" @input="(event) => pointsAdjusted(event, 'setPoints1')" min="0" class="pointsinput"></div>
+				<div style="text-align: right;">Matches: <input type="number" v-model="matchPoints1" @input="(event) => pointsAdjusted(event, 'matchPoints1')" min="0" class="pointsinput"></div>
 			</div>
 			<div id="right-player">
 				<button @click="incrementScore(2)" class="inc" :class="{ 'my-turn': playersTurn === 2 }">{{ score2 }}</button>
 				<div :class="{ 'player-name': true, 'my-turn': playersTurn === 2 }">Player 2</div>
 				<button @click="decrementScore(2)" class="dec">-</button>
+				<div style="height: 20px"></div>
+				<div style="text-align: right;">Sets: <input type="number" v-model="setPoints2" @input="(event) => pointsAdjusted(event, 'setPoints2')" min="0" class="pointsinput"></div>
+				<div style="text-align: right;">Matches: <input type="number" v-model="matchPoints2" @input="(event) => pointsAdjusted(event, 'matchPoints2')" min="0" class="pointsinput"></div>
 			</div>
 		</div>
 		<div>
@@ -76,9 +93,14 @@ button.dec {
 			&nbsp;
 			<button @click="swapSides">Swap Sides</button>
 		</div>
-		<div style="margin-top: 10px">
+		<div v-if="currSport != 'tennis'" style="margin-top: 10px">
 			<input type="range" min="1" max="10" v-model="serveCount" @change="changeServeCount" />
 			<label>{{ serveCount }} serves each</label>
+		</div>
+		<div class="sport-selector">
+			<select v-model="currSport">
+				<option v-for="sport in allSports" :key="sport.id" :value="sport.id">{{ sport.name }}</option>
+			</select>
 		</div>
 	</div>
 </body>
