@@ -14,6 +14,10 @@ var serveToggler = false;  //boolean which inverts the player's turn calculation
 var playersTurn = 1;
 var serveCount = 2;
 
+if (typeof process.env.SERVER_PORT == 'undefined') {
+	process.env.SERVER_PORT = 3011;
+}
+
 wsServer.on('connection', (ws) => {
 	// Send initial data to clients
 	ws.send(JSON.stringify(getSendPayload()));
