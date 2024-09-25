@@ -56,10 +56,12 @@ const app = Vue.createApp({
 		connectWebSocket();
 
 		const incrementScore = (player) => {
+			if (navigator.vibrate) navigator.vibrate(50);
 			ws.send(JSON.stringify({ type: 'increment', player }));
 		};
 
 		const decrementScore = (player) => {
+			if (navigator.vibrate) navigator.vibrate(400);
 			ws.send(JSON.stringify({ type: 'decrement', player }));
 		};
 
